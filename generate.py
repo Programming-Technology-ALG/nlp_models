@@ -14,6 +14,9 @@ warnings.filterwarnings('ignore')
 PAGES_LOAD = 30
 CONSOLE = True
 
+cache_dir =  Path('cache/')
+cache_dir.mkdir(exist_ok=True)
+
 
 category_links = [
     ('https://www.nn.ru/text/?rubric=economics&page=', 'economics'),
@@ -35,7 +38,7 @@ chrome_options.add_argument('--disable-application-cache')
 driver = webdriver.Chrome(options=chrome_options)
 
 
-link_path = Path(f'cache/links_{PAGES_LOAD}.json')
+link_path = cache_dir / f'links_{PAGES_LOAD}.json'
 
 if not link_path.exists():
     category_res = {}
@@ -74,7 +77,7 @@ for values in list(links.values()):
 print(leng, total, flush=True)
 
 
-news_path = Path(f'cache/news_{total}.json')
+news_path = cache_dir / f'news_{total}.json'
 if not news_path.exists():
     news = []
     driver = webdriver.Chrome(chrome_options=chrome_options)
